@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PatientModule } from './patient/patient.module';
+import { MedicationModule } from './medication/medication.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -13,6 +14,7 @@ import { AppService } from './app.service';
       synchronize: true,
     }),
     PatientModule,
+    MedicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
