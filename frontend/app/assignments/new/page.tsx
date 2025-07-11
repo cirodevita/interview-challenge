@@ -14,6 +14,7 @@ interface Patient {
 interface Medication {
   id: number;
   name: string;
+  dosage: string;
 }
 
 export default function NewAssignmentPage() {
@@ -142,7 +143,9 @@ export default function NewAssignmentPage() {
             >
               <option value="" disabled>Select a medication</option>
               {medications.map(m => (
-                <option key={m.id} value={m.id}>{m.name}</option>
+                <option key={m.id} value={m.id}>
+                  {m.name} - {m.dosage}
+                </option>
               ))}
             </select>
           </div>
