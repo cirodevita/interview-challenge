@@ -1,4 +1,4 @@
-import { AssignmentEntity } from '../assignment/assignment.entity';
+import { AssignmentEntity } from 'src/assignment/assignment.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()

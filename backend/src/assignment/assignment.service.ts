@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, ConflictException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AssignmentEntity } from './assignment.entity';
-import { PatientEntity } from '../patient/patient.entity';
+import { PatientEntity } from 'src/patient/patient.entity';
 import { MedicationEntity } from '../medication/medication.entity';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
