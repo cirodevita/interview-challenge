@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-
-const API_URL = 'http://localhost:8080';
+import { API_URL } from './lib/constants';
 
 interface Assignment {
   id: number;
