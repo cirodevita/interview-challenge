@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { AssignmentEntity } from '../assignment/assignment.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class MedicationEntity {
@@ -14,6 +15,6 @@ export class MedicationEntity {
   @Column()
   frequency: string;
 
-  //@OneToMany(() => Assignment, assignment => assignment.medication, { onDelete: 'CASCADE' })
-  //assignments: Assignment[];
+  @OneToMany(() => AssignmentEntity, assignment => assignment.medication, { onDelete: 'CASCADE' })
+  assignments: AssignmentEntity[];
 }

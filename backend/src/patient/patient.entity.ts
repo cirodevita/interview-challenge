@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { AssignmentEntity } from '../assignment/assignment.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class PatientEntity {
@@ -11,6 +12,6 @@ export class PatientEntity {
   @Column()
   dateOfBirth: Date;
 
-  //@OneToMany(() => Assignment, assignment => assignment.patient, { onDelete: 'CASCADE' })
-  //assignments: Assignment[];
+  @OneToMany(() => AssignmentEntity, assignment => assignment.patient, { onDelete: 'CASCADE' })
+  assignments: AssignmentEntity[];
 }
