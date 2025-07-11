@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AssignmentEntity } from './assignment.entity';
@@ -41,6 +41,26 @@ export class AssignmentService {
     const medication = await this.medicationsRepository.findOneBy({ id: medicationId });
     if (!medication) {
       throw new NotFoundException(`Medication with ID ${medicationId} not found`);
+    }
+
+    const existingAssignments = await this.assignmentsRepository.find({
+        where: {
+            patient: { id: patientId },
+            medication: { id: medicationId },
+        },
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const activeDuplicate = existingAssignments.find(assignment => {
+        const endDate = new Date(assignment.startDate);
+        endDate.setDate(endDate.getDate() + assignment.numberOfDays);
+        return endDate >= today;
+    });
+
+    if (activeDuplicate) {
+        throw new ConflictException('This medication is already actively assigned to this patient.');
     }
 
     const assignment = new AssignmentEntity();
