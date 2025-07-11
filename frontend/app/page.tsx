@@ -156,7 +156,8 @@ export default function Home() {
                                   <div className={`px-3 py-1 rounded-full text-sm font-semibold ${getRemainingDaysColor(assignment.remainingDays)}`}>
                                     {assignment.remainingDays} days left
                                   </div>
-                                  <button onClick={() => handleDelete(assignment.id)} className="text-sm font-medium text-red-600 hover:text-red-800">Remove</button>
+                                  <Link href={`/assignments/edit/${assignment.id}`} className="text-sm font-medium text-blue-600 hover:text-blue-800">Edit</Link>
+                                  <button onClick={() => handleDelete(assignment.id)} className="text-sm font-medium text-red-600 hover:text-red-800">Delete</button>
                                 </div>
                               </li>
                             ))}

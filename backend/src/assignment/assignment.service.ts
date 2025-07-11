@@ -5,6 +5,7 @@ import { AssignmentEntity } from './assignment.entity';
 import { PatientEntity } from '../patient/patient.entity';
 import { MedicationEntity } from '../medication/medication.entity';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
+import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 
 @Injectable()
 export class AssignmentService {
@@ -50,6 +51,19 @@ export class AssignmentService {
 
     const savedAssignment = await this.assignmentsRepository.save(assignment);
     return this.findOne(savedAssignment.id);
+  }
+
+  async update(id: number, updateAssignmentDto: UpdateAssignmentDto): Promise<AssignmentEntity> {
+    const assignment = await this.assignmentsRepository.preload({
+      id: id,
+      ...updateAssignmentDto,
+    });
+
+    if (!assignment) {
+      throw new NotFoundException(`Assignment with ID ${id} not found`);
+    }
+    
+    return this.assignmentsRepository.save(assignment);
   }
 
   async remove(id: number): Promise<void> {
