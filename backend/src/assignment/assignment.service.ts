@@ -17,24 +17,8 @@ export class AssignmentService {
     private medicationsRepository: Repository<MedicationEntity>,
   ) {}
 
-  private calculateRemainingDays(assignment: AssignmentEntity): AssignmentEntity {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const startDate = new Date(assignment.startDate);
-    const endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + assignment.numberOfDays);
-
-    const remainingMilliseconds = endDate.getTime() - today.getTime();
-    const remainingDays = Math.ceil(remainingMilliseconds / (1000 * 60 * 60 * 24));
-    assignment.remainingDays = remainingDays > 0 ? remainingDays : 0;
-    
-    return assignment;
-  }
-
   async findAll(): Promise<AssignmentEntity[]> {
-    const assignments = await this.assignmentsRepository.find({ relations: ['patient', 'medication'] });
-    return assignments.map(assignment => this.calculateRemainingDays(assignment));
+    return this.assignmentsRepository.find({ relations: ['patient', 'medication'] });
   }
 
   async findOne(id: number): Promise<AssignmentEntity> {
@@ -42,7 +26,7 @@ export class AssignmentService {
     if (!assignment) {
       throw new NotFoundException(`Assignment with ID ${id} not found`);
     }
-    return this.calculateRemainingDays(assignment);
+    return assignment;
   }
 
   async create(createAssignmentDto: CreateAssignmentDto): Promise<AssignmentEntity> {
@@ -65,9 +49,7 @@ export class AssignmentService {
     assignment.numberOfDays = numberOfDays;
 
     const savedAssignment = await this.assignmentsRepository.save(assignment);
-    
-    const fullAssignment = await this.findOne(savedAssignment.id);
-    return this.calculateRemainingDays(fullAssignment);
+    return this.findOne(savedAssignment.id);
   }
 
   async remove(id: number): Promise<void> {

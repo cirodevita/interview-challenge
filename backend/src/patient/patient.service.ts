@@ -11,8 +11,11 @@ export class PatientService {
     private patientsRepository: Repository<PatientEntity>,
   ) {}
 
+
   async findAll(): Promise<PatientEntity[]> {
-    return this.patientsRepository.find();
+    return this.patientsRepository.find({ 
+      relations: ['assignments', 'assignments.medication'] 
+    });
   }
 
   async findOne(id: number): Promise<PatientEntity> {
