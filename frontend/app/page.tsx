@@ -32,27 +32,48 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${API_URL}/patients`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: Patient[] = await response.json();
-        setPatients(data);
-        setError(null);
-      } catch (e: any) {
-        setError(e.message || 'Failed to fetch patients.');
-        console.error(e);
-      } finally {
-        setLoading(false);
+  const fetchPatients = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}/patients`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
+      const data: Patient[] = await response.json();
+      setPatients(data);
+      setError(null);
+    } catch (e: any) {
+      setError(e.message || 'Failed to fetch patients.');
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPatients();
   }, []);
+
+  const handleDelete = async (assignmentId: number) => {
+    if (!window.confirm('Are you sure you want to delete this treatment?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/assignments/${assignmentId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete the treatment.');
+      }
+
+      fetchPatients();
+
+    } catch (e: any) {
+      setError(e.message);
+    }
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -121,8 +142,8 @@ export default function Home() {
                         {activeTreatments.length > 0 ? (
                           <ul className="space-y-3">
                             {activeTreatments.map((assignment) => (
-                              <li key={assignment.id} className="bg-gray-50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                                <div>
+                              <li key={assignment.id} className="bg-gray-50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start">
+                                <div className="flex-grow">
                                   <p className="font-bold text-gray-800">{assignment.medication.name}</p>
                                   <p className="text-sm text-gray-500">
                                     {assignment.medication.dosage} - {assignment.medication.frequency}
@@ -131,8 +152,11 @@ export default function Home() {
                                     Started on: {formatDate(assignment.startDate)} &bull; Duration: {assignment.numberOfDays} days
                                   </p>
                                 </div>
-                                <div className={`mt-3 sm:mt-0 px-3 py-1 rounded-full text-sm font-semibold ${getRemainingDaysColor(assignment.remainingDays)}`}>
-                                  {assignment.remainingDays} days left
+                                <div className="flex items-center space-x-4 mt-3 sm:mt-0">
+                                  <div className={`px-3 py-1 rounded-full text-sm font-semibold ${getRemainingDaysColor(assignment.remainingDays)}`}>
+                                    {assignment.remainingDays} days left
+                                  </div>
+                                  <button onClick={() => handleDelete(assignment.id)} className="text-sm font-medium text-red-600 hover:text-red-800">Remove</button>
                                 </div>
                               </li>
                             ))}
