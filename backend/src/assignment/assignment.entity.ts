@@ -24,15 +24,22 @@ export class AssignmentEntity {
   @AfterLoad()
   calculateRemainingDays() {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const todayUTC = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
     const startDate = new Date(this.startDate);
-    const endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + this.numberOfDays);
+    
+    const lastDayOfTreatment = new Date(startDate);
+    lastDayOfTreatment.setUTCDate(startDate.getUTCDate() + this.numberOfDays - 1);
+    const lastDayOfTreatmentUTC = Date.UTC(lastDayOfTreatment.getUTCFullYear(), lastDayOfTreatment.getUTCMonth(), lastDayOfTreatment.getUTCDate());
+    
+    if (lastDayOfTreatmentUTC < todayUTC) {
+        this.remainingDays = 0;
+        return;
+    }
 
-    const remainingMilliseconds = endDate.getTime() - today.getTime();
-    const remainingDays = Math.ceil(remainingMilliseconds / (1000 * 60 * 60 * 24));
+    const remainingMilliseconds = lastDayOfTreatmentUTC - todayUTC;
+    const remainingDays = (remainingMilliseconds / (1000 * 60 * 60 * 24)) + 1;
 
-    this.remainingDays = remainingDays > 0 ? remainingDays : 0;
+    this.remainingDays = remainingDays;
   }
 }
