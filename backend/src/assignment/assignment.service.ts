@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AssignmentEntity } from './assignment.entity';
 import { PatientEntity } from 'src/patient/patient.entity';
-import { MedicationEntity } from '../medication/medication.entity';
+import { MedicationEntity } from 'src/medication/medication.entity';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 
