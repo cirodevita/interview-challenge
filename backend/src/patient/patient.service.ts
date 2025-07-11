@@ -1,8 +1,10 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+// backend/src/patient/patient.service.ts
+import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { PatientEntity } from './patient.entity';
 import { CreatePatientDto } from './dto/create-patient.dto';
+import { getDayRange } from 'src/common/utils/date.utils';
 
 @Injectable()
 export class PatientService {
@@ -10,7 +12,6 @@ export class PatientService {
     @InjectRepository(PatientEntity)
     private patientsRepository: Repository<PatientEntity>,
   ) {}
-
 
   async findAll(): Promise<PatientEntity[]> {
     return this.patientsRepository.find({ 
@@ -32,7 +33,15 @@ export class PatientService {
   async create(createPatientDto: CreatePatientDto): Promise<PatientEntity> {
     const { name, dateOfBirth } = createPatientDto;
 
-    const existingPatient = await this.patientsRepository.findOneBy({ name, dateOfBirth });
+    const [startOfDay, endOfDay] = getDayRange(new Date(dateOfBirth))
+    
+    const existingPatient = await this.patientsRepository.findOne({
+      where: {
+        name,
+        dateOfBirth: Between(startOfDay, endOfDay),
+      },
+    });
+
     if (existingPatient) {
       throw new ConflictException('A patient with this name and date of birth already exists.');
     }
