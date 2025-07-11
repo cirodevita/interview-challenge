@@ -1,5 +1,5 @@
 
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AssignmentService } from './assignment.service';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 
@@ -8,6 +8,7 @@ export class AssignmentController {
   constructor(private readonly assignmentService: AssignmentService) {}
 
   @Post()
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createAssignmentDto: CreateAssignmentDto) {
     return this.assignmentService.create(createAssignmentDto);
   }

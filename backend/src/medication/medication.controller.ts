@@ -1,5 +1,5 @@
 
-import { Controller, Get, Post, Put, Delete, Param, ParseIntPipe, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, ParseIntPipe, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { MedicationService } from './medication.service';
 import { MedicationEntity } from './medication.entity';
 import { CreateMedicationDto } from './dto/create-medication.dto';
@@ -19,11 +19,13 @@ export class MedicationController {
     }
 
     @Post()
+    @UsePipes(new ValidationPipe({ transform: true }))
     create(@Body() createPatientDto: MedicationEntity) {
         return this.medicationService.create(createPatientDto);
     }
 
     @Put(':id')
+    @UsePipes(new ValidationPipe({ transform: true }))
     update(@Param('id', ParseIntPipe) id: number, @Body() updatePatientDto: CreateMedicationDto) {
         return this.medicationService.update(id, updatePatientDto);
     }

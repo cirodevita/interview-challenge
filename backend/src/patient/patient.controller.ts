@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, ParseIntPipe, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, ParseIntPipe, Body, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 
@@ -17,11 +17,13 @@ export class PatientController {
     }
 
     @Post()
+    @UsePipes(new ValidationPipe({ transform: true }))
     create(@Body() createPatientDto: CreatePatientDto) {
         return this.patientService.create(createPatientDto);
     }
 
     @Put(':id')
+    @UsePipes(new ValidationPipe({ transform: true }))
     update(@Param('id', ParseIntPipe) id: number, @Body() updatePatientDto: CreatePatientDto) {
         return this.patientService.update(id, updatePatientDto);
     }
