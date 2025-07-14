@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getPatients, getMedications, createAssignment } from '@/app/lib/api';
+import { getPatients } from '@/app/lib/api/patients';
+import { getMedications } from '@/app/lib/api/medications';
+import { createAssignment } from '@/app/lib/api/assignments';
 import { Patient, Medication } from '@/app/types';
 
 export function useCreateAssignment() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditAssignment } from '@/app/hooks/useEditAssignment';
+import { useEditAssignment } from '@/app/hooks/assignments/useEditAssignment';
 import AssignmentForm from '@/app/components/forms/AssignmentForm';
 
 export default function EditAssignmentPage() {

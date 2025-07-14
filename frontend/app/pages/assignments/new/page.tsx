@@ -1,6 +1,6 @@
 "use client";
 
-import { useCreateAssignment } from '@/app/hooks/useCreateAssignment';
+import { useCreateAssignment } from '@/app/hooks/assignments/useCreateAssignment';
 import AssignmentForm from '@/app/components/forms/AssignmentForm';
 
 export default function NewAssignmentPage() {

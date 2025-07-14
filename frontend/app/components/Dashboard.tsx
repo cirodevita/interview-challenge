@@ -2,7 +2,7 @@
 
 import Head from 'next/head';
 import Link from 'next/link';
-import { usePatients } from '@/app/hooks/usePatients';
+import { usePatients } from '@/app/hooks/patients/usePatients';
 import Button from '@/app/components/ui/Button';
 import PatientCard from '@/app/components/PatientCard';
 

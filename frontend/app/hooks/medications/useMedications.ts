@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Medication } from '@/app/types';
-import { getMedications, deleteMedication } from '../lib/api';
+import { getMedications, deleteMedication } from '@/app/lib/api/medications';
 
 export function useMedications() {
   const [medications, setMedications] = useState<Medication[]>([]);

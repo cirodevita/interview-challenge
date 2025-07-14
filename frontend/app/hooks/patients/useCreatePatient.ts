@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createMedication } from '@/app/lib/api';
+import { createPatient } from '@/app/lib/api/patients';
 
-export function useCreateMedication() {
+export function useCreatePatient() {
   const [name, setName] = useState('');
-  const [dosage, setDosage] = useState('');
-  const [frequency, setFrequency] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -17,15 +16,15 @@ export function useCreateMedication() {
     setLoading(true);
     setError(null);
 
-    if (!name || !dosage || !frequency) {
-      setError('All fields are required.');
-      setLoading(false);
-      return;
+    if (!name || !dateOfBirth) {
+        setError('Name and date of birth are required.');
+        setLoading(false);
+        return;
     }
 
     try {
-      await createMedication({ name, dosage, frequency });
-      router.push('/pages/medications');
+      await createPatient({ name, dateOfBirth });
+      router.push('/');
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -35,13 +34,11 @@ export function useCreateMedication() {
 
   return {
     name,
-    dosage,
-    frequency,
+    dateOfBirth,
     loading,
     error,
     setName,
-    setDosage,
-    setFrequency,
+    setDateOfBirth,
     handleSubmit,
   };
 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { getMedicationById, updateMedication } from '../lib/api';
+import { getMedicationById, updateMedication } from '@/app/lib/api/medications';
 
 export function useEditMedication() {
   const router = useRouter();

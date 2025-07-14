@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { Patient } from '../types';
-import { getPatients, deleteAssignment } from '@/app/lib/api';
+import { Patient } from '@/app/types';
+import { getPatients } from '@/app/lib/api/patients';
+import { deleteAssignment } from '@/app/lib/api/assignments';
 
 export function usePatients() {
   const [patients, setPatients] = useState<Patient[]>([]);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { getAssignmentById, updateAssignment } from '@/app/lib/api';
+import { getAssignmentById, updateAssignment } from '@/app/lib/api/assignments';
 
 export function useEditAssignment() {
   const router = useRouter();

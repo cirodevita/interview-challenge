@@ -2,7 +2,7 @@
 
 import Head from 'next/head';
 import Link from 'next/link';
-import { useMedications } from '@/app/hooks/useMedications';
+import { useMedications } from '@/app/hooks/medications/useMedications';
 import Button from '@/app/components/ui/Button';
 
 export default function MedicationsPage() {
