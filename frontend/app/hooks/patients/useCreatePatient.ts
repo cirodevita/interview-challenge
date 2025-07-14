@@ -22,8 +22,10 @@ export function useCreatePatient() {
         return;
     }
 
+    const dateInUtc = new Date(dateOfBirth).toISOString();
+
     try {
-      await createPatient({ name, dateOfBirth });
+      await createPatient({ name, dateOfBirth: dateInUtc });
       router.push('/');
     } catch (e) {
         if (e instanceof Error) {

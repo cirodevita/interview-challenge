@@ -70,11 +70,14 @@ export function useCreateAssignment() {
     }
     setLoading(true);
     setError(null);
+
+    const startDateUtc = new Date(startDate).toISOString();
+
     try {
       await createAssignment({ 
         patientId: parseInt(patientId), 
         medicationId: parseInt(medicationId), 
-        startDate, 
+        startDate: startDateUtc, 
         numberOfDays: parseInt(numberOfDays) 
       });
       router.push('/');

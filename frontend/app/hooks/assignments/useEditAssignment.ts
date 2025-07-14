@@ -43,9 +43,12 @@ export function useEditAssignment() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    const startDateUtc = new Date(startDate).toISOString();
+
     try {
       await updateAssignment(id, {
-        startDate,
+        startDate: startDateUtc,
         numberOfDays: parseInt(numberOfDays),
       });
       router.push('/');

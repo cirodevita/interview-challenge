@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsDateString, MaxDate } from 'class-validator';
+import { IsString, IsNotEmpty, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
 import { IsNotFutureDate } from 'src/common/validators/is-not-future-date.decorator';
 
 export class CreatePatientDto {
@@ -6,8 +7,8 @@ export class CreatePatientDto {
     @IsNotEmpty()
     name: string;
 
-    @IsDateString()
-    @IsNotEmpty()
+    @IsDate()
+    @Type(() => Date)
     @IsNotFutureDate({ message: 'Date of birth cannot be in the future' })
     dateOfBirth: Date;
 }

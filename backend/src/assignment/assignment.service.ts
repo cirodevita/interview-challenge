@@ -51,13 +51,17 @@ export class AssignmentService {
     });
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const todayUTC = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
     const activeDuplicate = existingAssignments.find(assignment => {
-        const endDate = new Date(assignment.startDate);
-        endDate.setDate(endDate.getDate() + assignment.numberOfDays);
-        return endDate >= today;
-    });
+      const assignmentStartDate = new Date(assignment.startDate);
+      
+      const lastDayOfTreatment = new Date(assignmentStartDate);
+      lastDayOfTreatment.setUTCDate(assignmentStartDate.getUTCDate() + assignment.numberOfDays - 1);
+      const lastDayOfTreatmentUTC = Date.UTC(lastDayOfTreatment.getUTCFullYear(), lastDayOfTreatment.getUTCMonth(), lastDayOfTreatment.getUTCDate());
+
+      return lastDayOfTreatmentUTC >= todayUTC;
+  });
 
     if (activeDuplicate) {
         throw new ConflictException('This medication is already actively assigned to this patient.');

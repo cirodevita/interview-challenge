@@ -25,7 +25,7 @@ export function useCreateMedication() {
 
     try {
       await createMedication({ name, dosage, frequency });
-      router.push('/medications');
+      router.push('/pages/medications');
     } catch (e) {
         if (e instanceof Error) {
             setError(e.message);

@@ -1,4 +1,5 @@
-import { IsInt, IsNotEmpty, IsDateString, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsDate, Min } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateAssignmentDto {
   @IsInt()
@@ -9,8 +10,8 @@ export class CreateAssignmentDto {
   @IsNotEmpty()
   medicationId: number;
 
-  @IsDateString()
-  @IsNotEmpty()
+  @IsDate()
+  @Type(() => Date)
   startDate: Date;
 
   @IsInt()
