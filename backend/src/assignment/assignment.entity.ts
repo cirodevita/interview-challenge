@@ -27,7 +27,13 @@ export class AssignmentEntity {
     const todayUTC = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
     const startDate = new Date(this.startDate);
-    
+    const startDateUTC = Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate());
+
+    if (startDateUTC > todayUTC) {
+      this.remainingDays = this.numberOfDays;
+      return;
+    }
+
     const lastDayOfTreatment = new Date(startDate);
     lastDayOfTreatment.setUTCDate(startDate.getUTCDate() + this.numberOfDays - 1);
     const lastDayOfTreatmentUTC = Date.UTC(lastDayOfTreatment.getUTCFullYear(), lastDayOfTreatment.getUTCMonth(), lastDayOfTreatment.getUTCDate());
@@ -40,6 +46,6 @@ export class AssignmentEntity {
     const remainingMilliseconds = lastDayOfTreatmentUTC - todayUTC;
     const remainingDays = (remainingMilliseconds / (1000 * 60 * 60 * 24)) + 1;
 
-    this.remainingDays = remainingDays;
+    this.remainingDays = Math.round(remainingDays);
   }
 }
