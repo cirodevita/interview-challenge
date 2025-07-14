@@ -21,13 +21,13 @@ export default function Dashboard() {
             Dashboard
           </h1>
           <div className="flex space-x-2">
+          <Link href="/pages/medications">
+              <Button variant="secondary">
+                Medications
+              </Button>
+            </Link>
             <Link href="/pages/patients/new">
               <Button>+ Add Patient</Button>
-            </Link>
-            <Link href="/pages/medications/new">
-              <Button>
-                + Add Medication
-              </Button>
             </Link>
             <Link href="/pages/assignments/new">
               <Button>
