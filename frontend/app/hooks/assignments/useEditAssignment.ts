@@ -26,8 +26,12 @@ export function useEditAssignment() {
         setMedicationName(assignmentData.medication.name);
         setStartDate(new Date(assignmentData.startDate).toISOString().split('T')[0]);
         setNumberOfDays(String(assignmentData.numberOfDays));
-      } catch (e: any) {
-        setError(e.message);
+      } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
       } finally {
         setLoading(false);
       }
@@ -45,8 +49,12 @@ export function useEditAssignment() {
         numberOfDays: parseInt(numberOfDays),
       });
       router.push('/');
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     } finally {
       setLoading(false);
     }

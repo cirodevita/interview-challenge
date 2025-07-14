@@ -25,8 +25,12 @@ export function useCreatePatient() {
     try {
       await createPatient({ name, dateOfBirth });
       router.push('/');
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     } finally {
       setLoading(false);
     }

@@ -17,22 +17,23 @@ export function useEditMedication() {
 
   useEffect(() => {
     if (!id) return;
-
     const fetchMedication = async () => {
       try {
         setLoading(true);
         const medicationData = await getMedicationById(id);
-
         setName(medicationData.name);
         setDosage(medicationData.dosage);
         setFrequency(medicationData.frequency);
-      } catch (e: any) {
-        setError(e.message);
+      } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
       } finally {
         setLoading(false);
       }
     };
-
     fetchMedication();
   }, [id]);
 
@@ -40,12 +41,15 @@ export function useEditMedication() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
     try {
       await updateMedication(id, { name, dosage, frequency });
-      router.push('/pages/medications');
-    } catch (e: any) {
-      setError(e.message);
+      router.push('/medications');
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     } finally {
       setLoading(false);
     }

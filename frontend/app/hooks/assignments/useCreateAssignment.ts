@@ -32,8 +32,12 @@ export function useCreateAssignment() {
         setAllPatients(patientsData);
         setAllMedications(medicationsData);
         setAvailableMedications(medicationsData);
-      } catch (e: any) {
-        setError(e.message);
+      } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred while fetching data.');
+        }
       } finally {
         setLoading(false);
       }
@@ -74,8 +78,12 @@ export function useCreateAssignment() {
         numberOfDays: parseInt(numberOfDays) 
       });
       router.push('/');
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred during submission.');
+        }
     } finally {
       setLoading(false);
     }

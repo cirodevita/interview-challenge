@@ -16,8 +16,12 @@ export function usePatients() {
       const data = await getPatients();
       setPatients(data);
       setError(null);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     } finally {
       setLoading(false);
     }
@@ -34,10 +38,19 @@ export function usePatients() {
     try {
       await deleteAssignment(assignmentId);
       await fetchPatients();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     }
   };
 
-  return { patients, loading, error, handleDeleteTreatment };
+  return {
+    patients,
+    loading,
+    error,
+    handleDeleteTreatment
+  };
 }

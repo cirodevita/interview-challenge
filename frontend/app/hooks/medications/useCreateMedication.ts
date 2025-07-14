@@ -25,9 +25,13 @@ export function useCreateMedication() {
 
     try {
       await createMedication({ name, dosage, frequency });
-      router.push('/pages/medications');
-    } catch (e: any) {
-      setError(e.message);
+      router.push('/medications');
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     } finally {
       setLoading(false);
     }

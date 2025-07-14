@@ -15,8 +15,12 @@ export function useMedications() {
       const data = await getMedications();
       setMedications(data);
       setError(null);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     } finally {
       setLoading(false);
     }
@@ -33,10 +37,19 @@ export function useMedications() {
     try {
       await deleteMedication(id);
       await fetchMedications();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e) {
+        if (e instanceof Error) {
+            setError(e.message);
+        } else {
+            setError('An unknown error occurred.');
+        }
     }
   };
 
-  return { medications, loading, error, handleDeleteMedication };
+  return {
+    medications,
+    loading,
+    error,
+    handleDeleteMedication
+  };
 }
