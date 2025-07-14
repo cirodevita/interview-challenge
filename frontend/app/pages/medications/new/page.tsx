@@ -1,7 +1,7 @@
 "use client";
 
-import { useCreateMedication } from '../../../hooks/useCreateMedication';
-import MedicationForm from '../../../components/forms/MedicationForm';
+import { useCreateMedication } from '@/app/hooks/useCreateMedication';
+import MedicationForm from '@/app/components/forms/MedicationForm';
 
 export default function NewMedicationPage() {
   const {

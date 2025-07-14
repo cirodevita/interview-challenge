@@ -1,7 +1,7 @@
 "use client";
 
-import { useEditAssignment } from '../../../../hooks/useEditAssignment';
-import AssignmentForm from '../../../../components/forms/AssignmentForm';
+import { useEditAssignment } from '@/app/hooks/useEditAssignment';
+import AssignmentForm from '@/app/components/forms/AssignmentForm';
 
 export default function EditAssignmentPage() {
   const {

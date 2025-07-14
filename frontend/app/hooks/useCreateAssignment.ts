@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getPatients, getMedications, createAssignment } from '../lib/api';
-import { Patient, Medication } from '../types';
+import { getPatients, getMedications, createAssignment } from '@/app/lib/api';
+import { Patient, Medication } from '@/app/types';
 
 export function useCreateAssignment() {
   const [allPatients, setAllPatients] = useState<Patient[]>([]);

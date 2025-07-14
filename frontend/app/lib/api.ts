@@ -1,5 +1,5 @@
-import { API_URL } from './constants';
-import { Patient, Medication, Assignment } from '../types';
+import { API_URL } from '@/app/lib/constants';
+import { Patient, Medication, Assignment } from '@/app/types';
 
 export async function getPatients(): Promise<Patient[]> {
   const response = await fetch(`${API_URL}/patients`);

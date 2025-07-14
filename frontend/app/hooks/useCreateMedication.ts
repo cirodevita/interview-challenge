@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createMedication } from '../lib/api';
+import { createMedication } from '@/app/lib/api';
 
 export function useCreateMedication() {
   const [name, setName] = useState('');

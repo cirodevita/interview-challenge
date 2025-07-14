@@ -2,9 +2,9 @@
 
 import Head from 'next/head';
 import Link from 'next/link';
-import { usePatients } from '../hooks/usePatients';
-import Button from './ui/Button';
-import PatientCard from './PatientCard';
+import { usePatients } from '@/app/hooks/usePatients';
+import Button from '@/app/components/ui/Button';
+import PatientCard from '@/app/components/PatientCard';
 
 export default function Dashboard() {
   const { patients, loading, error, handleDeleteTreatment } = usePatients();

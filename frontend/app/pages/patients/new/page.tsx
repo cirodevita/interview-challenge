@@ -1,7 +1,7 @@
 "use client";
 
 import { useCreatePatient } from '@/app/hooks/useCreatePatient';
-import PatientForm from '../../../components/forms/PatientForm';
+import PatientForm from '@/app/components/forms/PatientForm';
 
 export default function NewPatientPage() {
   const {

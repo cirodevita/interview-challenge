@@ -1,9 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import { Assignment } from '../types';
-import { formatDate, getRemainingDaysColor } from '../lib/utils';
-import Button from './ui/Button';
+import { Assignment } from '@/app/types';
+import { formatDate, getRemainingDaysColor } from '@/app/lib/utils';
+import Button from '@/app/components/ui/Button';
 
 interface TreatmentListProps {
   assignments: Assignment[];

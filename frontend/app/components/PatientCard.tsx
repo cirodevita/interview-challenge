@@ -1,9 +1,9 @@
 "use client";
 
-import { Patient } from '../types';
-import { formatDate } from '../lib/utils';
-import Card from './ui/Card';
-import TreatmentList from './TreatmentList';
+import { Patient } from '@/app/types';
+import { formatDate } from '@/app/lib/utils';
+import Card from '@/app/components/ui/Card';
+import TreatmentList from '@/app/components/TreatmentList';
 
 interface PatientCardProps {
   patient: Patient;
